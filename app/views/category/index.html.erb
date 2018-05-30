@@ -1,0 +1,128 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<%@count =0%>  
+							<% @category.each do |t| %>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordian" href="#<%=t.name%>">				
+												<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+												<%= t.name%>
+											</a>
+										</h4>
+									</div>
+									<div id="<%=t.name%>" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul>	
+												<%@list[@count].each do |t2|%>
+												<%@cate=t.name%>
+												<%@pro = t2%>
+													 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+														<li><%=t2%></li>
+													<%end%>
+												 <%end%>
+											 <%@count=@count+1%>
+											</ul>
+										</div>
+									</div>
+								</div>
+							<% end %>
+						</div>
+					
+					
+						<div class="brands_products"><!--brands_products-->
+							<h2>Brands</h2>
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+								<%@count=0%>
+								<%@Producers.each do |t|%>
+								<%@cate="All"%>
+								<%@pro =t.name%>
+								 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+									<li><p><span class="pull-right">(<%=@list_number_product_of_producer[@count]%>)</span><%=t.name%><p></li>
+									<%end%>
+									<%@count=@count+1%>
+								<%end%>
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+						
+						<div class="price-range"><!--price-range-->
+							<h2>Price Range</h2>
+							<div class="well">
+								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+								 <b>$ 0</b> <b class="pull-right">$ 600</b>
+							</div>
+						</div><!--/price-range-->
+						
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/home/shipping.jpg" alt="" />
+						</div><!--/shipping-->
+						
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+                    <h3> <a href="/category/new" id="update">Add new category</a></h3>
+                    <input  class="search" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+                    <center>
+                    <table  id="myTable" border="2px" width="80%">
+                        <thead>
+                            <th style="font-size:20px;"> Category name </th>
+                            <th style="font-size:20px;"> Category image </th>
+                            <th colspan="2" style="font-size:20px;"> Action </th>
+                        </thead>
+                        <tbody>
+                            <% @category.each do |c|%>
+                                <tr>
+                                    <td style="color:SlateBlue;font-size:20px;"><center><%=c.name %></center></td>
+                                    <td>
+                                        <center>
+                                            <img src="<%=c.image%>" height="100" width="100">
+                                        </center>
+                                    </td>
+                                    <td> <center><%= link_to "Update" ,edit_category_path(c.id),class: 'button'%> </center></td>
+                                    <td>
+                                        <center>
+                                        <%= link_to "Delete",category_path(c.id), method: :delete,:data =>{:confirm => "Are you sure?"},class: 'button' %>
+                                        </center>
+                                    </td>
+                                </tr>
+                            <%end%>
+                        </tbody>
+                    </table>
+                    </center>
+                </div>
+                </div>
+			</div>
+		</div>
+	</section>      
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+

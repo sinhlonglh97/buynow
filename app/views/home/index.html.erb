@@ -1,0 +1,321 @@
+	<section id="slider"><!--slider-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#slider-carousel" data-slide-to="1"></li>
+							<li data-target="#slider-carousel" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner">
+							  <% i = 0 
+							  @item = "item active"  
+							  while i < 3  
+							  if(i >0) 
+							  @item = " item" 
+							  end%>
+								<div class="<%=@item%>">
+									<div class="col-sm-6">
+										<h1><span>EKB</span>-BUYNOW</h1>
+										<h2>Khuyến mãi cực SHOCKKKK!!!!</h2>
+										<p>Mua hàng trúng IPHONE X</p>
+										<button type="button" class="btn btn-default get">Mua ngay</button>
+									</div>
+									<div class="col-sm-6">
+										<img src="/images/banner/banner<%=	i+1%>.jpg"  class="girl img-responsive" alt="" height="500px" width="500px" />
+									</div>
+								</div>
+							<%i = i +1 
+							end %>
+						</div>
+						
+						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						</a>
+						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section><!--/slider-->
+	
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<%@count =0%>  
+							<% @Categories.each do |t| %>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordian" href="#<%=t.name%>">				
+												<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+												<%= t.name%>
+											</a>
+										</h4>
+									</div>
+									<div id="<%=t.name%>" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul>	
+												<%@list[@count].each do |t2|%>
+												<%@cate=t.name%>
+												<%@pro = t2%>
+													 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+														<li><%=t2%></li>
+													<%end%>
+												 <%end%>
+											 <%@count=@count+1%>
+											</ul>
+										</div>
+									</div>
+								</div>
+							<% end %>
+						</div>
+					
+					<div class="brands_products"><!--brands_products-->
+							<h2>Brands</h2>
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+								<%@count=0%>
+								<%@Producers.each do |t|%>
+								<%@cate="All"%>
+								<%@pro =t.name%>
+								 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+									<li><p><span class="pull-right">(<%=@list_number_product_of_producer[@count]%>)</span><%=t.name%><p></li>
+									<%end%>
+									<%@count=@count+1%>
+								<%end%>
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+						
+						<div class="price-range"><!--price-range-->
+							<h2>Price Range</h2>
+							<div class="well text-center">
+								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+							</div>
+						</div><!--/price-range-->
+						
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/home/shipping.jpg" alt="" />
+						</div>
+						<div class="shipping text-center"><!--shipping-->
+						  <img src="/images/Promotion/tablethot.PNG" height="200px" width="265px" alt=""/>
+						</div>
+						<div class="shipping text-center"><!--shipping-->
+						  <img src="/images/Promotion/laptophot.jpg" height="200px" width="265px" alt=""/>
+						</div>
+						<div class="shipping text-center"><!--shipping-->
+						  <img src="/images/Promotion/tablethot2.jpg" height="200px" width="265px" alt=""/>
+						</div>
+						<!--/shipping-->
+					
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">New Items</h2>
+           				<%@Products.each do |t|%>
+							<div class="col-sm-4">
+								<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<img src= "<%=t.images[0]%>" weight="255px" style="height: 255px" alt="" />
+												<h2 style="color:red"><%=number_with_delimiter(t.price.to_i)%> VND</h2>
+												<h4 style="weight:255px; height: 40px"><%=t.name %></h4>
+												<a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+											<div class="product-overlay">
+												<div class="overlay-content">
+												<div class="center-content">
+													<p>CPU: <%=t.cpu%></p>
+													<p>RAM: <%=t.ram%></p>
+													<p>VGA: <%=t.vga%></p>
+													<p>OS: <%=t.os%></p>
+													<p>PIN: <%=t.pin%></p>
+												</div>
+													<h3 style="color:#F7F7F5"><%=number_with_delimiter(t.price.to_i)%> VND</h3>
+													<p style="color:#ff0"><%=t.name%></p>
+													<%= link_to product_path(t) do %>
+														<p>View details</p>
+													<%end%>
+													<div>
+														<%= form_for(@order_item, remote: true) do |f| %>
+															<%# <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %> 
+															<div class="form-group">
+																<%= f.hidden_field :product_id, value: t.id %>
+																<%= f.hidden_field :quantity, value: 1 %>
+																<%= f.submit "Add to Cart", class: "btn btn-default add-to-cart" %>		
+															</div>		
+														<% end %>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="choose">
+											<ul class="nav nav-pills nav-justified">
+												<li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+												<li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+											</ul>
+										</div>
+									</div>
+							</div>
+						<%end%>
+					</div><!--features_items-->
+			
+					<div class="category-tab"><!--category-tab-->
+						<div class="col-sm-12">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#<%=@Categories[0].name%>tab" data-toggle="tab">	
+							<%=@Categories[0].name%></a></li>
+							<%@count = 1%>
+							<% while @count <@Categories.length %>	
+								<li><a href="#<%=@Categories[@count].name%>tab" data-toggle="tab"><%=@Categories[@count].name%></a></li>
+									<%@count = @count+1%>
+							<%end%>
+							</ul>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane fade active in" id="<%=@Categories[0].name%>tab" >
+								<%@Products_categories[0].each do |t|%>
+									<div class="col-sm-3">
+										<div class="product-image-wrapper" >
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="<%=t.images[0]%>"style="height: 200px;width:184px"  alt="" />
+													<h2><%=number_with_delimiter(t.price.to_i)%>VND</h2>
+													<p style="weight:183; height: 60px"><%=t.name%></p>
+													<%= form_for @order_item, remote: true do |f| %>
+														<%# <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %> 
+														<div class="form-group">
+															<%= f.hidden_field :product_id, value: t.id %>
+															<%= f.hidden_field :quantity, value: 1 %>
+														</div>
+														<%= f.submit "Add to Cart", class: "btn btn-default add-to-cart" %>					
+													<% end %>
+												</div>
+											</div>
+										</div>
+									</div>
+								<%end%>
+							</div>
+							<%@count = 1%>
+							<% while @count < @Categories.length %>	
+								<div class="tab-pane fade" id= "<%=@Categories[@count].name%>tab">
+									<%@Products_categories[@count].each do |t|%>
+										<div class="col-sm-3">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src= "<%=t.images[0]%>" style="height: 200px;width:184px"  alt="" />
+														<h2><%=number_with_delimiter(t.price.to_i)%> VND</h2>
+														<p style="weight:183; height: 60px"><%=t.name%></p>
+														<div class="pull-right">
+															<%= form_for(@order_item, remote: true) do |f| %>
+																<%= f.hidden_field :product_id, value: t.id %>
+																<h5><%= number_with_delimiter(t.price.to_i) %></h5>
+																<div class="form-group">
+																	<%= f.text_field :quantity, value: 1, min: 1, class: 'form-control' %>
+																</div>
+																<%= f.submit "Add to cart", class: 'btn btn-primary btn-sm' %>
+															<% end %>
+														</div>
+														<%= form_for @order_item, remote: true do |f| %>
+														<%# <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %> 
+														<div class="form-group">
+															<%= f.hidden_field :product_id, value: t.id %>
+															<%= f.hidden_field :quantity, value: 1 %>
+														</div>
+														<%= f.submit "Add to Cart", class: "btn btn-default add-to-cart" %>					
+													<% end %>
+													</div>
+												</div>
+											</div>
+										</div>
+									<%end%>
+								</div>
+								<%@count = @count+1%>
+							<%end%>
+						</div>
+					</div><!--/category-tab-->
+
+					<div class="recommended_items"><!--recommended_items-->
+						<h2 class="title text-center">recommended items</h2>
+						
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="item active">	
+									<%@count=0%>
+									<%(1..3).each do |i|%>
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src= "<%=@Recommended[@count].images[0]%>" style="height: 200px;width:184px"  alt="" />
+														<h2><%=number_with_delimiter(@Recommended[@count].price.to_i)%> VND</h2>
+														<p style="weight:183; height: 60px"><%=@Recommended[@count].name%></p>
+														<%= form_for @order_item, remote: true do |f| %>
+														<%# <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %> 
+														<div class="form-group">
+															<%= f.hidden_field :product_id, value: @Recommended[@count].id %>
+															<%= f.hidden_field :quantity, value: 1 %>
+														</div>
+														<%= f.submit "Add to Cart", class: "btn btn-default add-to-cart" %>					
+													<% end %>
+													</div>
+												</div>
+											</div>
+										</div>
+									<%@count=@count+1%>
+									<%end%>
+								</div>
+								<%(1..@Num_of_item_recommend).each do |i|%>
+									<div class="item">	
+										<%(1..3).each do |j|%>
+											<div class="col-sm-4">
+												<div class="product-image-wrapper">
+													<div class="single-products">
+														<div class="productinfo text-center">
+															<img src= "<%=@Recommended[@count].images[0]%>"  style="height: 200px;width:184px"  alt="" />
+															<h2><%=number_with_delimiter(@Recommended[@count].price.to_i)%>VND</h2>
+															<p style="weight:183; height: 60px"><%=@Recommended[@count].name%></p>
+															<%= form_for @order_item, remote: true do |f| %>
+																<%# <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %> 
+																<div class="form-group">
+																	<%= f.hidden_field :product_id, value: @Recommended[@count].id %>
+																	<%= f.hidden_field :quantity, value: 1 %>
+																</div>
+																<%= f.submit "Add to Cart", class: "btn btn-default add-to-cart" %>					
+															<% end %>
+														</div>
+													</div>
+												</div>
+											</div>
+										<%@count=@count+1%>
+										<%end%>
+									</div>
+								<%end%>
+							</div>
+
+							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>			
+						</div>
+					</div><!--/recommended_items-->
+
+				</div>
+			</div>
+		</div>
+	</section>

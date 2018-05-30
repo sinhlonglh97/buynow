@@ -1,0 +1,82 @@
+<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<%@count =0%>  
+							<% @Categories.each do |t| %>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordian" href="#<%=t.name%>">				
+												<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+												<%= t.name%>
+											</a>
+										</h4>
+									</div>
+									<div id="<%=t.name%>" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul>	
+												<%@list[@count].each do |t2|%>
+												<%@cate=t.name%>
+												<%@pro = t2%>
+													 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+														<li><%=t2%></li>
+													<%end%>
+												 <%end%>
+											 <%@count=@count+1%>
+											</ul>
+										</div>
+									</div>
+								</div>
+							<% end %>
+						</div>
+						
+					   <div class="brands_products"><!--brands_products-->
+							<h2>Brands</h2>
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+								<%@count=0%>
+								<%@Producers.each do |t|%>
+								<%@cate="All"%>
+								<%@pro =t.name%>
+								 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+									<li><p><span class="pull-right">(<%=@list_number_product_of_producer[@count]%>)</span><%=t.name%><p></li>
+									<%end%>
+									<%@count=@count+1%>
+								<%end%>
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+                	</div>
+                </div>
+                <div class="col-sm-9 padding-right">
+                    <h2 class="title text-center">Accounts</h2>
+                     <table style="width: 90%; background-color: white; border-collapse: collapse">
+                        <tr style="background-color:#f0f3f6; font-weight: bold; text-align: center;">
+                          <td>Id</td>
+                          <td>Name</td>
+                          <td>Email</td>
+                          <td>Address</td>
+                          <td>Phone Number</td>
+                          <td>Is Admin</td>
+                        </tr>
+                      <% @User.each do |user| %>
+                        <tr>
+                          <td><%= user.id %></td>
+                          <td><%= user.name %></td>
+                          <td><%= user.email %></td>
+                          <td><%= user.address %></td>
+                          <td><%= user.phone %></td>
+                          <td><%= user.is_admin %></td>
+                        </tr>
+                      <% end %>
+                      </table>
+                      </div><!--features_items-->
+				
+				</div>
+			</div>
+		</div>
+	</section>  

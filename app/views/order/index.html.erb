@@ -1,0 +1,199 @@
+	<section id="advertisement">
+		<div class="container">
+			<img src="/images/shop/advertisement.jpg" alt="" />
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<%@count =0%>  
+							<% @Categories.each do |t| %>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordian" href="#<%=t.name%>">				
+												<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+												<%= t.name%>
+											</a>
+										</h4>
+									</div>
+									<div id="<%=t.name%>" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul>	
+												<%@list[@count].each do |t2|%>
+												<%@cate=t.name%>
+												<%@pro = t2%>
+													 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+														<li><%=t2%></li>
+													<%end%>
+												 <%end%>
+											 <%@count=@count+1%>
+											</ul>
+										</div>
+									</div>
+								</div>
+							<% end %>
+						</div>
+					
+					
+						<div class="brands_products"><!--brands_products-->
+							<h2>Brands</h2>
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+								<%@count=0%>
+								<%@Producers.each do |t|%>
+								<%@cate="All"%>
+								<%@pro =t.name%>
+								 <%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+									<li><p><span class="pull-right">(<%=@list_number_product_of_producer[@count]%>)</span><%=t.name%><p></li>
+									<%end%>
+									<%@count=@count+1%>
+								<%end%>
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+						
+						<div class="price-range"><!--price-range-->
+							<h2>Price Range</h2>
+							<div class="well">
+								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+								 <b>$ 0</b> <b class="pull-right">$ 600</b>
+							</div>
+						</div><!--/price-range-->
+						
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/home/shipping.jpg" alt="" />
+						</div><!--/shipping-->
+						
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+				<h2 class="title text-center">Your Order Information</h2>
+						<div class="col-md-7">
+						<div class="billing-details"><!-- Billing Details -->
+							<div class="section-title">
+								<h3 class="title">Billing address</h3>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="first-name" placeholder="First Name">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="last-name" placeholder="Last Name">
+							</div>
+							<div class="form-group">
+								<input class="input" type="email" name="email" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="address" placeholder="Address">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="city" placeholder="City">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="country" placeholder="Country">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+							</div>
+							<div class="form-group">
+								<input class="input" type="tel" name="tel" placeholder="Telephone">
+							</div>
+							<div class="form-group">
+								<div class="input-checkbox">
+									<input type="checkbox" id="create-account">
+									<label for="create-account">
+										<span></span>
+										Create Account?
+									</label>
+									<div class="caption">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+										<input class="input" type="password" name="password" placeholder="Enter Your Password">
+									</div>
+								</div>
+							</div>
+						</div>	<!-- /Billing Details -->
+						<div class="shiping-details"><!-- Shiping Details -->
+							<div class="section-title">
+								<h3 class="title">Shiping address</h3>
+							</div>
+							<div class="input-checkbox">
+								<input type="checkbox" id="shiping-address">
+								<label for="shiping-address">
+									<span></span>
+									Ship to a diffrent address?
+								</label>
+								<div class="caption">
+									<div class="form-group">
+										<input class="input" type="text" name="first-name" placeholder="First Name">
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="last-name" placeholder="Last Name">
+									</div>
+									<div class="form-group">
+										<input class="input" type="email" name="email" placeholder="Email">
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="address" placeholder="Address">
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="city" placeholder="City">
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="country" placeholder="Country">
+									</div>
+									<div class="form-group">
+										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+									</div>
+									<div class="form-group">
+										<input class="input" type="tel" name="tel" placeholder="Telephone">
+									</div>
+								</div>
+							</div>
+						</div><!-- /Shiping Details -->
+						<div class="order-notes"><!-- Order notes -->
+							<textarea class="input" placeholder="Order Notes"></textarea>
+						</div>	<!-- /Order notes -->
+					</div>
+					<div class="col-md-5 order-details"><!-- Order Details -->
+						<div class="section-title text-center">
+							<h3 class="title">Your Order</h3>
+						</div>
+						<div class="order-summary">
+							<div class="order-col">
+								<div><strong>PRODUCT</strong></div>
+								<div><strong>TOTAL</strong></div>
+							</div>
+							<div class="order-products">
+								<% if @order_items.size>0 %>
+									<% @order_items.each do |item| %>
+										<div class="order-col">
+											<div><%=item.quantity.to_i%>x <%= item.product.name %></div>
+											<div><%=number_with_delimiter( item.total_price.to_i) %> VND</div>
+										</div>
+									<%end%>
+								<%end%>
+							</div>
+							<div class="order-col">
+								<div><strong>TOTAL</strong></div>
+								<div><strong class="order-total"><%=number_with_delimiter(current_order.subtotal.to_i)%>VND</strong></div>
+							</div>
+						</div>
+						<div class="input-checkbox">
+							<input type="checkbox" id="terms">
+							<label for="terms">
+								<span></span>
+								I've read and accept the <a href="#">terms and conditions</a>
+							</label>
+						</div>
+						<a href="/carts/new" class="primary-btn order-submit">Place order</a>
+					</div><!-- /Order Details -->	
+				</div>
+			</div>
+		</div>
+	</section>

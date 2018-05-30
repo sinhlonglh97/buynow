@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | BUYNOW</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+<body>
+	<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-left">
+						<li><a href="#"><i class="fa fa-phone"></i> +082997825</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> EKB-intership@email.com</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> F-Town Building, Lot T2, D1 Street</a></li>
+					</ul>
+					<ul class="header-links pull-right">
+						<li><a href="#"><i class="fa fa-dollar"></i> VND</a></li>
+						<li>
+							<% if account_signed_in? %>
+								<% @email=Account.where(id: current_account.id)%>
+								<li>
+									<div class="dropdown-login">
+										<a class="fa" href="#" style="font-family:Montserrat,sans-serif;">My Account<span class="caret"></span></a>
+										<ul class="dropdown-content">
+											<%=link_to edit_user_path(current_account) do%>
+											<li><p style="color: #fff"></p>Profile</li> 
+											<%end%>
+											<%=link_to edit_user_path(current_account) do%>
+											<li><p style="color: #fff"></p>Change Password</li> 
+											<%end%>
+											<%=link_to destroy_account_session_path, method: :delete do%>
+												<li><p  style="color: #fff"></p>Logout</li>
+											<%end%>
+										</ul>
+									</div>
+								</li>
+							<%else%>
+								<%=link_to new_account_session_path do%>
+									<li><p><i class="fa"></i> Login</p></li>
+								<%end%>
+							<%end%>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<div class="col-md-3">
+							<div class="header-logo">
+								<a href="#" class="logo">
+									<h1 style="color: #fff;">BUYNOW</h1>
+								</a>
+							</div>
+						</div>
+						<!-- /LOGO -->
+						<!-- SEARCH BAR -->
+						<div class="col-md-6">
+							<div class="header-search-style">
+								<form>
+									<select class="input-select-style">
+										<option value="0" ><%@option="0"%>All</option>
+										<option value="1"><%@option="1"%>Product</option>
+										<option value="2"><%@option="2"%>Producer</option>
+									</select>
+									<%@pro%>
+									<input class="input-style" placeholder="Search here">
+									<%= link_to product_index_path(:param1 => @cate,:param2=>  @pro) do%>
+									<button class="search-btn-style">Search</button>
+									<%end%>
+								</form>
+							</div>
+						</div>
+						<!-- /SEARCH BAR -->
+
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Cart -->
+								<div class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										
+											<i class="fa fa-shopping-cart"></i>
+											<%# <%= link_to "#{current_order.order_items.size} items in card and price #{current_order.subtotal}", carts_path %> 
+											<div class="qty"><%=current_order.order_items.size%></div>		
+											<%= link_to carts_path  do %>	
+											<span>Your Cart</span>
+										<%end%>
+									</a>	
+									<div class="cart-dropdown">
+										<div class="cart-list">
+											<%if current_order.order_items.size >0 %>
+												<%current_order.order_items.each do |product|%>
+													<%@item=Product.where(id:product.product_id).limit(1)%>
+													<div class="product-widget">
+														<div class="product-img">
+															<img src="<%=@item[0].images[0]%>" alt="">
+														</div>
+														<div class="product-body">
+															<h3 class="product-name"><a href="#"><%=@item[0].name%></a></h3>
+															<h4 class="product-price"><span class="qty"><%=product.quantity%> x</span><%=number_with_delimiter(product.unit_price.to_i)%> VND</h4>
+														</div>
+														<button class="delete"><i class="fa fa-close"></i></button>
+													</div>
+												<%end%>
+											<%else%>
+											<%end%>
+											<div class="cart-summary">
+												<small><%=current_order.order_items.size%> Item(s) selected</small>
+												<%# <p><%=current_order.id%></p>
+												<h5>SUBTOTAL:<%=number_with_delimiter(current_order.subtotal.to_i)%> VND</h5>
+											</div>
+											<div class="cart-btns">
+												<a href="/carts">View Cart</a>
+												
+												<a href="/order">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+		</header>
+		<!-- /HEADER -->
+	<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/" class="active"><p>Home</p></a></li>
+								<%# <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="shop.html">Products</a></li>
+										<li><a href="product-details.html">Product Details</a></li> 
+										<li><a href="checkout.html">Checkout</a></li> 
+										<li><a href="cart.html">Cart</a></li> 
+										<li><a href="login.html">Login</a></li> 
+					
+                                    </ul>
+                                </li>  %>
+								<%if account_signed_in?%>
+									<%if current_account.is_admin == true%>
+										<li class="dropdown"><a href="#">Admin<i class="fa fa-angle-down"></i></a>
+											<ul role="menu" class="sub-menu">
+												<li>
+													<%= link_to product_adim_index_path do %>
+														<p>View Product</p>
+													<% end %>
+												</li>
+												<li>
+													<%= link_to  new_product_adim_path do %>
+														<p>Add Product</p>
+													<% end %>
+												</li>
+												<li>
+													<%= link_to category_index_path do %>
+														<p>Category</p>
+													<% end %>
+												</li>
+												<li>
+													<%= link_to('/producer') do %>
+													<p>Producer</p>
+													<% end %>
+												</li>
+												<li>
+													<%= link_to('/users') do %>
+													<p>Account</p>
+													<% end %>
+												</li>
+												
+											</ul>
+										</li> 
+									<%end%>
+								<%end%>
+							
+								<%# <li><a href="contact-us.html">Contact</a></li> %>
+							</ul>
+						</div>
+					</div>
+			<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+
+	
+<%= yield%>
+	
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>Buy</span>Now</h2>
+							<p>EKB-Fsoft project</p>
+						</div>
+					</div>
+					<div class="col-sm-7">
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="/images/member/dat.jpg" alt="" />
+									</div>
+								</a>
+								<p style="color: #fff">Đắt Ngô</p>
+								<h2>18 JAN 1997</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="/images/member/trang.jpg" alt="" />
+									</div>
+								</a>
+								<p style="color: #fff">Trang Dương</p>
+								<h2>24 DEC 2014</h2>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="/images/member/long.jpg" alt="" />
+									</div>
+								</a>
+								<p style="color: #fff">Long Huỳnh</p>
+								<h2>24 DEC 2014</h2>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="video-gallery text-center">
+								<a href="#">
+									<div class="iframe-img">
+										<img src="/images/member/tuan.jpg" alt="" />
+									</div>
+								</a>
+								<p style="color: #fff">Tuấn Trần</p>
+								<h2>24 DEC 2014</h2>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							<img src="/images/home/map1.png" alt="" />
+							<%# <p>F-Town Building, Lot T2, D1 Street, Saigon Hi-Tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam</p> %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+				<span class="copyright">
+					<p style="color:#b9babc;">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+				</span>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+</body>
+</html>

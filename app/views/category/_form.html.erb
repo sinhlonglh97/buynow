@@ -1,0 +1,13 @@
+<%= form_for :category ,:html => {:multipart => true}, url: :category,  method: :put  do |f|%>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.file_field :image %><br>
+  </p>
+<div>
+    <input type="submit" value="Submit" id="update">
+</div>
+
+<% end %>

@@ -1,0 +1,38 @@
+<% if !@order_item.nil? && @order_item.errors.any? %>
+	<ul>
+		<% @order_item.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+	</ul>
+<% end %>
+<% if @order_items.size>0 %>
+	<% @order_items.each do |item| %>
+		<div class="well">
+			<div class="row">
+				<div class="col-sm-4">
+					<img src="<%=item.product.images[0]%>" style="width: 200px; height:200px" alt="">
+				</div>
+				<div class="col-sm-8">
+					<div class="pull-left">
+					<%= form_for(item, remote: true) do |f| %>
+						<%= f.hidden_field :product_id, value: item.product.id %>
+						<h3><%= item.product.name %></h3>
+						<h5><%= number_with_delimiter(item.product.price.to_i) %> VND</h5>
+						<div class="form-group">
+							<%= f.text_field :quantity, value: item.quantity.to_i, min: 1 %>
+							<%= f.submit "Update Quantity", class:'btn-update'%>
+						</div>
+						<div class="btn-group">
+							<%= link_to "Delete Item", item, method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  %>
+						</div>
+						<div>
+							<p style="clear: both;">Total Price: <%=number_with_delimiter( item.total_price.to_i) %> VND</p>
+						</div>
+					<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+<% else %>
+<% end %>

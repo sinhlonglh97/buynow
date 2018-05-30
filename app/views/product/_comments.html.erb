@@ -1,0 +1,19 @@
+<%= form_for :comment, url: :comment, method: :post do |form|  %>
+  <div class="panel panel-info">
+    <div class="panel-body">
+      <%= form.text_area :content, placeholder: 'Write your comment here',class: 'pb-cmnt-textarea' %>
+    </div>
+  </div>
+  <%= form.hidden_field :product_id, value: @product.id %>
+  <%= form.hidden_field :actor, value: @actor %>
+  <%= form.hidden_field :check, value: 1 %>
+  <% if account_signed_in? %>
+   <%= link_to comment_path(:param1 => @product.id) do%>
+    <%= form.submit 'Submit', class: 'btn btn-primary pull-right' %>
+     <% end %>
+    <% else %>
+    <%= link_to ('/accounts/sign_in') do %>
+        <p class="btn btn-default add-to-cart">Signin/Signup to create your comment!</p>
+      <% end %>
+  <% end %>
+<% end %>
